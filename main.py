@@ -1,15 +1,20 @@
 import telebot
-import vremya
+from vremya import *
+#1111111111 import json
+
 
 bot = telebot.TeleBot('6765117292:AAEDJttvGWNjCSYyZhAXzzERR1579sKtA_E')
 
 
 def main():
-    @bot.message_handler(commands=['расп'])
-    def main(message):
-        vremya.change_week()
-        bot.send_message(message.chat.id, f'сегодня {vremya.type_week}, {vremya.current_day}')
-
+    @bot.message_handler()
+    def start(message):
+        if message.text.lower().startswith('р'):
+            TypeWeek.check_type_week()
+            bot.send_message(message.chat.id, f'сегодня {TypeWeek.translate_type_week},'
+                                              f' {TypeWeek.current_day} день недели')
+        elif message.text.lower() in ('чет', 'нечет', 'неделя',):
+            bot.send_message(message.chat.id, TypeWeek.translate_type_week)
     bot.infinity_polling()
 
 
