@@ -1,11 +1,17 @@
 import telebot
+import vremya
 
 bot = telebot.TeleBot('6765117292:AAEDJttvGWNjCSYyZhAXzzERR1579sKtA_E')
 
 
-@bot.message_handler(commands=['расп'])
-def main(message):
-    bot.send_message(message.chat.id, 'кгасу не \'_\', сиди кайфуй')
+def main():
+    @bot.message_handler(commands=['расп'])
+    def main(message):
+        vremya.change_week()
+        bot.send_message(message.chat.id, f'сегодня {vremya.type_week}, {vremya.current_day}')
+
+    bot.infinity_polling()
 
 
-bot.infinity_polling()
+if __name__ == '__main__':
+    main()
