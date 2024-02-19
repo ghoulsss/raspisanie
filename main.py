@@ -1,6 +1,5 @@
 import telebot
 from vremya import *
-#1111111111 import json
 
 
 bot = telebot.TeleBot('6765117292:AAEDJttvGWNjCSYyZhAXzzERR1579sKtA_E')
