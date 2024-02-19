@@ -19,7 +19,7 @@ def main():
     def start(message):
         bot.send_message(message.chat.id, ReadRasp.pull_raspisanie_nedelya(TypeWeek.is_even_week()))
 
-    @bot.message_handler(commands=['next week'])
+    @bot.message_handler(commands=['next_week'])
     def start(message):
         bot.send_message(message.chat.id, ReadRasp.pull_raspisanie_next_nedelya(TypeWeek.is_even_week()))
 
