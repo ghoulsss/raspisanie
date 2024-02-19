@@ -9,11 +9,9 @@ def main():
     @bot.message_handler()
     def start(message):
         if message.text.lower().startswith('р'):
-            TypeWeek.check_type_week()
-            bot.send_message(message.chat.id, f'сегодня {TypeWeek.translate_type_week},'
-                                              f' {TypeWeek.current_day} день недели')
+            bot.send_message(message.chat.id, ReadRasp.pull_raspisanie(TypeWeek.is_even_week(), TypeWeek.current_day))
         elif message.text.lower() in ('чет', 'нечет', 'неделя',):
-            bot.send_message(message.chat.id, TypeWeek.translate_type_week)
+            bot.send_message(message.chat.id, TypeWeek.is_even_week())
     bot.infinity_polling()
 
 

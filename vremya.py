@@ -14,7 +14,7 @@ class TypeWeek:
     date = f"{datetime.now().day:02d}.{datetime.now().month:02d}"  # 19.01
 
     @staticmethod
-    def is_even_week(date=date):
+    def is_even_week(date=date) -> str:
         date_object = datetime.strptime(date, "%d.%m")
 
         week_number = date_object.isocalendar()[1]
@@ -24,16 +24,12 @@ class TypeWeek:
 class ReadRasp:
     @staticmethod
     def pull_raspisanie(type_week, day, filename='2grupa.json'):
-        # Открываем файл на чтение
         with open(filename, 'r', encoding='utf-8') as file:
             data = json.load(file)
 
-        # Теперь переменная 'data' содержит данные из файла JSON
-
-        # Пример доступа к данным
-        schedule = data.get(type_week, {})  # Получаем расписание для четной недели (если есть)
+        schedule = data.get(type_week, {})
         sending_message = ''
-        monday_schedule = schedule.get(day, [])  # Получаем расписание на понедельник для четной недели
+        monday_schedule = schedule.get(day, [])
         for lesson in monday_schedule:
             lesson_time = lesson.get("Время")
             subject = lesson.get("Предмет", "")
@@ -42,7 +38,7 @@ class ReadRasp:
             classroom = lesson.get("Аудитория", "")
 
             sending_message += f"{lesson_time}, {subject}, {teacher}, {lesson_type}, {classroom}\n"
-        print(sending_message)
+        return sending_message
 
 
-ReadRasp.pull_raspisanie(TypeWeek.is_even_week(), TypeWeek.current_day)
+# ReadRasp.pull_raspisanie(TypeWeek.is_even_week(), TypeWeek.current_day)
