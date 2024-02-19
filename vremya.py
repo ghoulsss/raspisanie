@@ -10,21 +10,39 @@ class TypeWeek:
             4: 'Четверг',
             5: 'Пятница'}
     moscow_timezone = pytz.timezone('Europe/Moscow')
-    # Получаем текущий день недели (1 - понедельник)
-    number_of_day = datetime.now(moscow_timezone).weekday() + 1
-    day_month = datetime.now().day
-    type_week = ["Chet", day_month]
+    current_day = days[datetime.now(moscow_timezone).weekday() + 1]  # Понедельник
+    date = f"{datetime.now().day:02d}.{datetime.now().month:02d}"  # 19.01
 
-    #translate_type_week = "Четная" if type_week == 'Chet' else "Нечетная"
+    @staticmethod
+    def is_even_week(date=date):
+        date_object = datetime.strptime(date, "%d.%m")
 
-    @classmethod
-    def check_type_week(cls):
-        if cls.number_of_day == 7 and cls.type_week[1] != :
-            if cls.type_week == "Chet":
-                cls.type_week = "Nechet"
-                return cls.type_week
-            elif cls.type_week == "Nechet":
-                cls.type_week = "Chet"
-                return cls.type_week
-    @classmethod
-    def change_type_week(cls):
+        week_number = date_object.isocalendar()[1]
+        return 'Chet' if week_number % 2 == 0 else 'Nechet'
+
+
+class ReadRasp:
+    @staticmethod
+    def pull_raspisanie(type_week, day, filename='2grupa.json'):
+        # Открываем файл на чтение
+        with open(filename, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+
+        # Теперь переменная 'data' содержит данные из файла JSON
+
+        # Пример доступа к данным
+        schedule = data.get(type_week, {})  # Получаем расписание для четной недели (если есть)
+        sending_message = ''
+        monday_schedule = schedule.get(day, [])  # Получаем расписание на понедельник для четной недели
+        for lesson in monday_schedule:
+            lesson_time = lesson.get("Время")
+            subject = lesson.get("Предмет", "")
+            teacher = lesson.get("Преподаватель", "")
+            lesson_type = lesson.get("Тип", "")
+            classroom = lesson.get("Аудитория", "")
+
+            sending_message += f"{lesson_time}, {subject}, {teacher}, {lesson_type}, {classroom}\n"
+        print(sending_message)
+
+
+ReadRasp.pull_raspisanie(TypeWeek.is_even_week(), TypeWeek.current_day)
