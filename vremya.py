@@ -43,10 +43,18 @@ class ReadRasp:
             teacher = lesson.get("Преподаватель", "")
             lesson_type = lesson.get("Тип", "")
             classroom = lesson.get("Аудитория", "")
-            if subject == 'Физ-ра':
-                sending_message += f"{i}) {lesson_time}, {subject}\n"
+
+            if i != len(monday_schedule):
+                if subject == 'Физ-ра':
+                    sending_message += f"{i}) {lesson_time}, {subject}\n\n"
+                else:
+                    sending_message += f"{i}) {lesson_time}, {subject}, {teacher}, {lesson_type}, {classroom}\n\n"
             else:
-                sending_message += f"{i}) {lesson_time}, {subject}, {teacher}, {lesson_type}, {classroom}\n"
+                if subject == 'Физ-ра':
+                    sending_message += f"{i}) {lesson_time}, {subject}"
+                else:
+                    sending_message += f"{i}) {lesson_time}, {subject}, {teacher}, {lesson_type}, {classroom}"
+
         return sending_message
 
     @staticmethod
@@ -114,4 +122,5 @@ class ReadRasp:
         return sending_message
 
 
-#print(ReadRasp.pull_raspisanie(TypeWeek.is_even_week(TypeWeek.tomorrow_date), TypeWeek.days[1]))
+# print(TypeWeek.current_day)
+# print(ReadRasp.pull_raspisanie(TypeWeek.is_even_week(TypeWeek.tomorrow_date), TypeWeek.days[1]))
