@@ -37,6 +37,7 @@ class ReadRasp:
             return 'Зачилься выходные же'
 
         monday_schedule = schedule.get(day, [])
+        #monday_schedule = schedule.get('Среда', [])
         for i, lesson in enumerate(monday_schedule, start=1):
             lesson_time = lesson.get("Время")
             subject = lesson.get("Предмет", "")
@@ -122,5 +123,5 @@ class ReadRasp:
         return sending_message
 
 
-# print(TypeWeek.current_day)
+#print(TypeWeek.current_day, TypeWeek.date)
 # print(ReadRasp.pull_raspisanie(TypeWeek.is_even_week(TypeWeek.tomorrow_date), TypeWeek.days[1]))

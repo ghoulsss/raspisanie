@@ -1,3 +1,9 @@
+import os
+import time
+
+os.environ["TZ"] = "Russia/Moscow"
+time.tzset()
+
 import telebot
 from vremya import *
 import schedule
@@ -26,9 +32,9 @@ def send_scheduled_message_tomorrow():
 
 
 def scheduled_task():
-    # Запускаем задачу каждый день в 12:00 по времени 'Europe/Moscow'
-    schedule.every().day.at("07:00").do(send_scheduled_message)
-    schedule.every().day.at("20:00").do(send_scheduled_message_tomorrow)
+    # Запускаем задачу каждый день в 7:00
+    schedule.every().day.at("04:00").do(send_scheduled_message)
+    schedule.every().day.at("17:00").do(send_scheduled_message_tomorrow)
     while True:
         schedule.run_pending()
         time.sleep(1)
@@ -38,20 +44,24 @@ def main():
     @bot.message_handler(commands=['today'])
     def start(message):
         bot.send_message(message.chat.id, ReadRasp.pull_raspisanie(TypeWeek.is_even_week(), TypeWeek.current_day))
+        print(1)
 
     @bot.message_handler(commands=['tomorrow'])
     def start(message):
         bot.send_message(message.chat.id, ReadRasp.pull_raspisanie(TypeWeek.is_even_week(TypeWeek.tomorrow_date),
                                                                    TypeWeek.days[datetime.now(pytz.timezone(
                                                                        'Europe/Moscow')).weekday() + 2]))
+        print(1)
 
     @bot.message_handler(commands=['week'])
     def start(message):
         bot.send_message(message.chat.id, ReadRasp.pull_raspisanie_nedelya(TypeWeek.is_even_week()))
+        print(1)
 
     @bot.message_handler(commands=['next_week'])
     def start(message):
         bot.send_message(message.chat.id, ReadRasp.pull_raspisanie_next_nedelya(TypeWeek.is_even_week()))
+        print(1)
 
     thread = threading.Thread(target=scheduled_task)
     thread.start()
