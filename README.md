@@ -1,1 +1,1 @@
-# Telegram_bot raspisanie
+# Telegram_bot for university schedule
