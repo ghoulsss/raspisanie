@@ -4,17 +4,17 @@ import time
 import threading
 import schedule
 
-bot = telebot.TeleBot('6765117292:AAEDJttvGWNjCSYyZhAXzzERR1579sKtA_E')
+bot = telebot.TeleBot('')
 
 
 def send_scheduled_message():
-    chat_id = "-1002026154974"
+    chat_id = ""
     message = Raspisanie.pull_raspisanie()
     bot.send_message(chat_id, message)
 
 
 def send_scheduled_message_tomorrow():
-    chat_id = "-1002026154974"
+    chat_id = ""
     message = Raspisanie.pull_raspisanie_tomorrow()
     bot.send_message(chat_id, message)
 
